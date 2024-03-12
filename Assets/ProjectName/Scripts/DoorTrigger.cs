@@ -7,7 +7,7 @@ public class DoorTrigger : MonoBehaviour
     public HouseController houseController;
 
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {

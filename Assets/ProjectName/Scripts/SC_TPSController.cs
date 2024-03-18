@@ -8,7 +8,7 @@ public class SC_TPSController : MonoBehaviour
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     public Transform playerCameraParent;
-    public float lookSpeed = 2.0f;
+    public float lookSpeed = 1f;
     public float lookXLimit = 60.0f;
 
     CharacterController characterController;
@@ -52,11 +52,22 @@ public class SC_TPSController : MonoBehaviour
         // Player and Camera rotation
         if (canMove)
         {
-            rotation.y += Input.GetAxis("Mouse X") * lookSpeed;
-            // rotation.x += -Input.GetAxis("Mouse Y") * lookSpeed;
-            // rotation.x = Mathf.Clamp(rotation.x, -lookXLimit, lookXLimit);
-            // playerCameraParent.localRotation = Quaternion.Euler(rotation.x, 0, 0);
-            transform.eulerAngles = new Vector2(0, rotation.y);
+            //вращение на мышку
+            // rotation.y += Input.GetAxis("Mouse X") * lookSpeed;
+            // transform.eulerAngles = new Vector2(0, rotation.y);
+            
+            //вращение на q e
+            if (Input.GetKey(KeyCode.Q))
+            {
+                rotation.y -= lookSpeed;
+                transform.eulerAngles = new Vector2(0, rotation.y);
+            }
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                rotation.y += lookSpeed;
+                transform.eulerAngles = new Vector2(0, rotation.y);
+            }
         }
     }
 }

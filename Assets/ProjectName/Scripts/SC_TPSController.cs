@@ -5,7 +5,10 @@ using UnityEngine;
 public class SC_TPSController : MonoBehaviour
 {
     public float speed = 4f;
-    // public float rotationSpeed = 0.5f;
+    public float sprint = 4f;
+    public float currentSpeed;
+    public bool bSprint; 
+    //public float rotationSpeed = 0.5f;
     // public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     
@@ -27,23 +30,31 @@ public class SC_TPSController : MonoBehaviour
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
         rotation.y = transform.eulerAngles.y;
+        bSprint = false;
     }
 
     void Update()
     {
         if (characterController.isGrounded)
         {
-            
+            animator.SetBool("sprint", Input.GetKey(KeyCode.LeftShift));
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                currentSpeed = speed + sprint;
+            } else {
+                currentSpeed = speed;
+            }
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             Vector3 right = transform.TransformDirection(Vector3.right);
-            float curSpeedX = canMove ? speed * Input.GetAxis("Vertical") : 0;
-            float curSpeedY = canMove ? speed * Input.GetAxis("Horizontal") : 0;
+            float curSpeedX = canMove ? currentSpeed * Input.GetAxis("Vertical") : 0;
+            float curSpeedY = canMove ? currentSpeed * Input.GetAxis("Horizontal") : 0;
             moveDirection = (forward * curSpeedX) + (right * curSpeedY);
-            // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveDirection), rotationSpeed);
+           // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveDirection), rotationSpeed);
 
             // Установка параметра "Speed" в аниматоре
-            float moveSpeed = Mathf.Clamp(moveDirection.magnitude / speed, 0f, 4f);
+            float moveSpeed = Mathf.Clamp(moveDirection.magnitude / currentSpeed, 0f, 4f);
             animator.SetFloat("speed", moveSpeed);
+            animator.SetFloat("currentSpeed", moveSpeed);
 
             // if (Input.GetButton("Jump") && canMove)
             // {

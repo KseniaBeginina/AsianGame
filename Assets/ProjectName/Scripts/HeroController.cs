@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 
-public class SC_TPSController : MonoBehaviour
+public class HeroController : MonoBehaviour
 {
     public float speed = 4f;
     public float sprint = 4f;

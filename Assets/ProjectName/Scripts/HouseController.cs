@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,15 @@ using UnityEngine;
 public class HouseController : MonoBehaviour
 {
     public Renderer roofRenderer;
+    public bool rre;
+    
 
     public void DisableRoof()
     {
         roofRenderer.enabled = false;
+        rre = roofRenderer.enabled;
     }
+
 
     public void EnableRoof()
     {

@@ -7,10 +7,9 @@ public class HeroController : MonoBehaviour
     public float speed = 4f;
     public float sprint = 4f;
     public float currentSpeed;
-    public bool bSprint; 
+    public float jump = 10f;
     //public float rotationSpeed = 0.5f;
-    // public float jumpSpeed = 8.0f;
-    public float gravity = 20.0f;
+    public float gravity = 30.0f;
     
     //Camera
     public Transform playerCameraParent;
@@ -30,7 +29,6 @@ public class HeroController : MonoBehaviour
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
         rotation.y = transform.eulerAngles.y;
-        bSprint = false;
     }
 
     void Update()
@@ -44,6 +42,8 @@ public class HeroController : MonoBehaviour
             } else {
                 currentSpeed = speed;
             }
+            animator.SetBool("jump", Input.GetKey(KeyCode.Space));
+
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             Vector3 right = transform.TransformDirection(Vector3.right);
             float curSpeedX = canMove ? currentSpeed * Input.GetAxis("Vertical") : 0;
@@ -56,10 +56,10 @@ public class HeroController : MonoBehaviour
             animator.SetFloat("speed", moveSpeed);
             animator.SetFloat("currentSpeed", moveSpeed);
 
-            // if (Input.GetButton("Jump") && canMove)
-            // {
-            //     moveDirection.y = jumpSpeed;
-            // }
+            if (Input.GetKeyDown(KeyCode.Space) && canMove)
+            {
+                moveDirection.y = jump;
+            }
         }
 
         moveDirection.y -= gravity * Time.deltaTime;
